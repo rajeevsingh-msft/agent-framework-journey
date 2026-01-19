@@ -2,6 +2,18 @@
 
 This repository is your comprehensive guide to building, orchestrating, and deploying AI agents and workflows using the Microsoft Agent Framework. Whether you're creating simple chat agents or complex multi-agent workflows, this repository has everything you need to get started.
 
+
+## 📚 Learn More
+
+For comprehensive insights and detailed tutorials, check out my blog post series:
+
+- **Part 1 - Agent Framework Fundamentals**: [Microsoft Agent Framework: The Open Source Engine for Agentic AI Apps](https://singhrajeev.com/2025/10/05/microsoft-agent-framework-the-open-source-engine-for-agentic-ai-apps/)
+- **Part 2 - Workflow Deep Dive**: [Microsoft Agent Framework Workflows: The Next Step in Building Intelligent Multi-Agent AI Systems](https://singhrajeev.com/2026/01/18/microsoft-agent-framework-workflows-the-next-step-in-building-intelligent-multi-agent-ai-systems/)
+
+
+
+
+
 ---
 
 ## ✨ Highlights
