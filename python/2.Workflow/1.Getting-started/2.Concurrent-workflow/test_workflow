@@ -1,0 +1,9 @@
+digraph Workflow {
+  rankdir=TD;
+  node [shape=box, style=filled, fillcolor=lightblue];
+  edge [color=black, arrowhead=vee];
+
+  "a" [fillcolor=lightgreen, label="a\n(Start)"];
+  "b" [label="b"];
+  "a" -> "b";
+}
