@@ -88,7 +88,7 @@ agent-framework-journey-main/
 ├── 🔒 .env                               # Environment configuration
 ├── 📁 documents/                          # Documentation and guides
 │   ├── Microsoft Foundry-setup-guide.md  # Azure setup instructions
-├── 🐍 python/                            # Python implementations
+├── 🐍python/                            # Python implementations
 │   ├── 1.Agents/                         # Agent demos and examples
 │   │   ├── 1.ai-foundry-agents/          # AI Foundry agent demos
 │   │   └── 2.DevUI/                      # DevUI for agent development
@@ -99,7 +99,6 @@ agent-framework-journey-main/
 │       │   ├── 3.Agents-in-Workflow/     # Workflows integrating agents
 │       │   └── 4.DevUI-Workflow/         # Interactive DevUI for workflows
 │       └── 2.Advance-samples/            # Advanced workflow patterns
-(excluded from git)
 ```
 
 ---
@@ -174,14 +173,38 @@ Follow the detailed setup instructions in our [Setup Guide](./documents/Microsof
    python demo1-AIFoundryAgents.py
    ```
 
-   **Sample Output:**
-   ```
-   Agent initialized successfully.
-   Input: "What is the weather today?"
-   Output: "I'm sorry, I cannot provide real-time weather updates."
-   ```
 
-   This demonstrates the basic functionality of an agent processing a user query.
+Here’s an example of how to create and run a simple agent:
+
+```python
+import asyncio
+import os
+from dotenv import load_dotenv
+from agent_framework import ChatAgent
+from agent_framework.azure import AzureAIAgentClient
+from azure.identity.aio import AzureCliCredential
+
+load_dotenv()
+
+async def main():
+    async with (
+        AzureCliCredential() as credential,
+        ChatAgent(
+            chat_client=AzureAIAgentClient(async_credential=credential),
+            instructions="You are good at telling jokes."
+        ) as agent,
+    ):
+        result = await agent.run("Tell me a joke about a pirate.")
+        print(result.text)
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+**Expected Output:**
+```
+Why don't pirates ever get lost? Because they always have their "sea" legs!
+```
 
 ---
 
@@ -197,96 +220,52 @@ Follow the detailed setup instructions in our [Setup Guide](./documents/Microsof
    python 1.create-sequential-workflow.py
    ```
 
-   **Sample Output:**
-   ```
-   Workflow started.
-   Step 1: Data fetched successfully.
-   Step 2: Data processed successfully.
-   Workflow completed.
-   ```
-
-   This demonstrates a simple sequential workflow execution.
-
----
-
-## 📖 Documentation
-
-Explore the detailed documentation to get the most out of this repository:
-
-- **[Agent Framework Documentation](https://docs.microsoft.com/azure/ai-foundry/)**: Official Microsoft documentation for the Agent Framework.
-- **[Setup Guide](./documents/Microsoft%20Foundry-setup-guide.md)**: Step-by-step instructions for setting up your environment.
-- **[Agent Framework vs Semantic Kernel Comparison](./DevTalk/SKvsAgentFramework.md)**: Understand the differences between the Agent Framework and Semantic Kernel.
-- **[Workflow Reference](./workflow-ref/README%20-%20Copy.md)**: Detailed guides and examples for workflows.
-- **[Community Resources](./workflow-ref/COMMUNITY-RESOURCES.md)**: Additional resources and community contributions.
-
----
-
-## Sample Code
-
-### Sample Agent
-
-Here’s an example of how to create and run a simple agent:
+Here's the actual sequential workflow from our repository:
 
 ```python
-from agent_sk import Agent
+import asyncio
+from typing_extensions import Never
+from agent_framework import WorkflowBuilder, WorkflowContext, WorkflowOutputEvent, Executor, executor, handler
 
-# Initialize the agent
-agent = Agent(name="SampleAgent")
+# Custom Executor class
+class UpperCase(Executor):
+    def __init__(self, id: str):
+        super().__init__(id=id)
 
-# Define a simple task
-def greet_user(input):
-    return f"Hello, {input}!"
+    @handler
+    async def to_upper_case(self, text: str, ctx: WorkflowContext[str]) -> None:
+        result = text.upper()
+        await ctx.send_message(result)
 
-# Register the task with the agent
-agent.register_task("greet", greet_user)
+# Function-based executor
+@executor(id="reverse_text_executor")
+async def reverse_text(text: str, ctx: WorkflowContext[Never, str]) -> None:
+    result = text[::-1]
+    await ctx.yield_output(result)
 
-# Run the agent
-response = agent.run_task("greet", "World")
-print(response)
+async def main():
+    upper_case = UpperCase(id="upper_case_executor")
+    
+    # Build the workflow
+    workflow = (
+        WorkflowBuilder()
+        .add_edge(upper_case, reverse_text)
+        .set_start_executor(upper_case)
+        .build()
+    )
+    
+    # Run the workflow
+    async for event in workflow.run_stream("hello world"):
+        if isinstance(event, WorkflowOutputEvent):
+            print(f"Workflow completed with result: {event.data}")
+
+if __name__ == "__main__":
+    asyncio.run(main())
 ```
 
 **Expected Output:**
 ```
-Hello, World!
-```
-
-### Sample Workflow
-
-Here’s an example of a simple sequential workflow:
-
-```python
-from workflow_agents import Workflow
-
-# Define workflow steps
-def step1():
-    print("Step 1: Fetching data...")
-    return "Data fetched"
-
-def step2(data):
-    print(f"Step 2: Processing {data}...")
-    return "Data processed"
-
-def step3(data):
-    print(f"Step 3: Saving {data}...")
-    return "Workflow complete"
-
-# Create the workflow
-workflow = Workflow()
-workflow.add_step(step1)
-workflow.add_step(step2)
-workflow.add_step(step3)
-
-# Execute the workflow
-result = workflow.execute()
-print(result)
-```
-
-**Expected Output:**
-```
-Step 1: Fetching data...
-Step 2: Processing Data fetched...
-Step 3: Saving Data processed...
-Workflow complete
+Workflow completed with result: DLROW OLLEH
 ```
 
 ---
