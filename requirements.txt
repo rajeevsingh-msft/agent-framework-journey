@@ -1,7 +1,21 @@
+# Microsoft Agent Framework - GA Production Requirements
+# Agent Framework Version 1.0 - Production Ready
+
+# Core dependencies
 python-dotenv
 azure-identity
-agent-framework
-agent-framework-azure-ai
-agent-framework-devui --pre # needed for workflow DevUI
-typing_extensions  # needed for workflow
-agent-framework[viz] --pre  # needed for workflow visualization
+
+# Agent Framework GA (Stable APIs)
+agent-framework>=1.0.0,<2.0.0                    # Core framework - production stable
+agent-framework-azure-ai==1.0.0rc6               # Azure integrations - latest stable
+
+# Preview features (optional)
+agent-framework-devui --pre                       # DevUI debugging interface
+agent-framework[viz] --pre                        # Workflow visualization
+
+# Supporting libraries  
+typing_extensions                                  # Type hints support
+
+# Optional production enhancements
+# pydantic>=2.0.0                                 # For structured outputs
+# opentelemetry-api>=1.20.0                      # For observability

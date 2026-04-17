@@ -1,6 +1,12 @@
 """
-Semantic Kernel equivalent of demo1-AIFoundryAgents.py
-This demonstrates the differences between Agent Framework and Semantic Kernel
+Microsoft Agent Framework vs Semantic Kernel Comparison
+======================================================
+
+This example demonstrates the differences in approach between:
+- Microsoft Agent Framework GA (simpler, fewer imports)  
+- Microsoft Semantic Kernel (more configuration required)
+
+Use this for educational comparison and migration planning.
 """
 import asyncio
 import os

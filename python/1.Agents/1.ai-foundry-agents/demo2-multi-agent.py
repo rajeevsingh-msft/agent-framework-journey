@@ -1,18 +1,38 @@
 """
-Agent Framework Multi-Agent Demo
-Simple demonstration of creating multiple specialized agents
+Microsoft Agent Framework GA - Multi-Agent Orchestration Demo
+============================================================
+
+This example demonstrates multi-agent collaboration using Agent Framework GA:
+
+✅ Features Demonstrated:
+- Multiple specialized agents working together
+- Agent orchestration and coordination
+- Named agents for better tracking
+- Shared context and state management
+- Production-ready multi-agent patterns
+
+🚀 Production Patterns:
+- Agent registry and lifecycle management
+- Structured inter-agent communication
+- Error handling across agent interactions
+- Performance monitoring and logging
 """
 
 import asyncio
 import os
 import time
 import json
+import logging
 from dotenv import load_dotenv
-from agent_framework import ChatAgent
-from agent_framework.azure import AzureAIAgentClient
+from agent_framework import Agent
+from agent_framework.foundry import FoundryChatClient
 from azure.identity.aio import AzureCliCredential
 
 load_dotenv()
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class MultiAgentDemo:
     def __init__(self):
@@ -31,16 +51,22 @@ class MultiAgentDemo:
         try:
             # Create separate clients for each agent
             self.credential = AzureCliCredential()
-            self.food_agent_client = AzureAIAgentClient(async_credential=self.credential)
-            self.meal_agent_client = AzureAIAgentClient(async_credential=self.credential)
+            self.food_agent_client = FoundryChatClient(
+                model=os.getenv("FOUNDRY_MODEL", "gpt-4o"),
+                credential=self.credential
+            )
+            self.meal_agent_client = FoundryChatClient(
+                model=os.getenv("FOUNDRY_MODEL", "gpt-4o"),
+                credential=self.credential
+            )
             
             # Check existing agents
             await self.check_registry()
-            #1. Agent Creation – The Foundation
+            
             # Create Food Expert Agent
             if self.food_agent is None:
-                self.food_agent = ChatAgent(
-                    chat_client=self.food_agent_client,
+                self.food_agent = Agent(
+                    client=self.food_agent_client,
                     name="FoodExpertAgent",
                     instructions="""You are a Food & Nutrition Expert. Provide accurate nutritional 
                     information, calorie content, and ingredient analysis. Be specific and helpful."""
@@ -49,12 +75,12 @@ class MultiAgentDemo:
                 # Test agent creation
                 await self.food_agent.run("Hello!")
                 self.register_agent("FoodExpertAgent", "nutrition")
-                print("✅ FoodExpertAgent created")
+                logger.info("✅ FoodExpertAgent created and registered")
                 
             # Create Meal Planning Agent
             if self.meal_agent is None:
-                self.meal_agent = ChatAgent(
-                    chat_client=self.meal_agent_client,
+                self.meal_agent = Agent(
+                    client=self.meal_agent_client,
                     name="MealPlanningAgent",
                     instructions="""You are a Meal Planning Specialist. Suggest healthy meals, 
                     recipes, and dietary plans based on user preferences and needs."""
