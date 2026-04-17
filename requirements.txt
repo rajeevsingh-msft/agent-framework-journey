@@ -1,0 +1,7 @@
+python-dotenv
+azure-identity
+agent-framework
+agent-framework-azure-ai
+agent-framework-devui --pre # needed for workflow DevUI
+typing_extensions  # needed for workflow
+agent-framework[viz] --pre  # needed for workflow visualization
