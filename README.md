@@ -55,10 +55,12 @@ Each section of Agents and Workflows includes detailed documentation on how to r
 
 | Topic | Description | Documentation Link |
 |-------|-------------|-------------------|
-| **Sequential Workflows** | Simple sequential workflows with step-by-step execution. | [Sequential Workflow Documentation](python/2.Workflow/1.Getting-started/1.Sequential-workflow/README.md) |
-| **Concurrent Workflows** | Workflows with concurrent execution of tasks. | [Concurrent Workflow Documentation](python/2.Workflow/1.Getting-started/2.Concurrent-workflow/README.md) |
-| **Agents in Workflows** | Integrating agents into workflows. | [Agents in Workflow Documentation](python/2.Workflow/1.Getting-started/3.Agents-in-Workflow/README.md) |
-| **DevUI for Workflows** | Interactive tools for workflow development. | [DevUI Workflow Documentation](python/2.Workflow/1.Getting-started/4.DevUI-Workflow/README.md) |
+| **Sequential Workflows** | Simple sequential workflows with step-by-step execution. | [Sequential Workflow Documentation](python/2.Workflow/1.Getting-started/1.Sequential-workflow/Readme.md) |
+| **Concurrent Workflows** | Workflows with concurrent execution of tasks. | [Concurrent Workflow Documentation](python/2.Workflow/1.Getting-started/2.Concurrent-workflow/Readme.md) |
+| **Agents in Workflows** | Integrating agents into workflows. | [Agents in Workflow Documentation](python/2.Workflow/1.Getting-started/3.Agents-in-Workflow/Readme.md) |
+| **DevUI for Workflows** | Interactive tools for workflow development. | [DevUI Workflow Documentation](python/2.Workflow/1.Getting-started/4.DevUI-Workflow/Readme.md) |
+| **Workflow with Branching Logic** | Advanced workflow with conditional branching and dynamic routing. | [Advanced Samples Documentation](python/2.Workflow/2.Advance-samples/README.md) |
+| **Workflow Handoff** | Agent handoff pattern — transfers control between agents in a workflow. | [Advanced Samples Documentation](python/2.Workflow/2.Advance-samples/README.md) |
 
 ### Step 3: Getting Started
 
@@ -99,6 +101,8 @@ agent-framework-journey-main/
 │       │   ├── 3.Agents-in-Workflow/     # Workflows integrating agents
 │       │   └── 4.DevUI-Workflow/         # Interactive DevUI for workflows
 │       └── 2.Advance-samples/            # Advanced workflow patterns
+│           ├── 4.workflow-with-branching-logic.py  # Conditional branching workflows
+│           └── 5.workflow-handoff.py               # Agent handoff between workflows
 ```
 
 ## Setup Guidelines

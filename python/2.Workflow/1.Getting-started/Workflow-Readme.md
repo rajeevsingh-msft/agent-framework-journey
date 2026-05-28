@@ -10,11 +10,14 @@ Hands-on examples demonstrating **Microsoft Agent Framework Workflows** - orches
 
 ```
 2.Workflow/
-└── 1.Getting-started/
-    ├── 📁 1.Sequential-workflow/     → Linear step-by-step execution
-    ├── 📁 2.Concurrent-workflow/     → Parallel fan-out/fan-in execution  
-    ├── 📁 3.Agents-in-Workflow/      → AI Agents within workflows 
-    ├── 📁 4.DevUI-Workflow/          → Interactive DevUI for workflows
+├── 1.Getting-started/
+│   ├── 📁 1.Sequential-workflow/     → Linear step-by-step execution
+│   ├── 📁 2.Concurrent-workflow/     → Parallel fan-out/fan-in execution  
+│   ├── 📁 3.Agents-in-Workflow/      → AI Agents within workflows 
+│   ├── 📁 4.DevUI-Workflow/          → Interactive DevUI for workflows
+└── 2.Advance-samples/
+    ├── 4.workflow-with-branching-logic.py  → Conditional branching workflows
+    └── 5.workflow-handoff.py               → Agent handoff between workflows
 ```
 
 Each folder contains its own **Readme.md** with detailed documentation.
@@ -55,6 +58,8 @@ python <file.py>
 | | [`2a-realworld-concurrent-workflow.py`](./2.Concurrent-workflow/2a-realworld-concurrent-workflow.py) | Real-world example: Price comparison engine with parallel API calls | |
 | **3.Agents-in-Workflow/** | [`3.agents-in-workflow.py`](./3.Agents-in-Workflow/3.agents-in-workflow.py) | AI Agents orchestrated within workflows | [📖 Readme](./3.Agents-in-Workflow/Readme.md) |
 | **4.DevUI-Workflow/** | [`1.workflow-agents-devui.py`](./4.DevUI-Workflow/1.workflow-agents-devui.py) | Content Review Workflow with Quality-Based Routing | [📖 Readme](./4.DevUI-Workflow/Readme.md) |
+| **../2.Advance-samples/** | [`4.workflow-with-branching-logic.py`](../2.Advance-samples/4.workflow-with-branching-logic.py) | Advanced workflow with conditional branching and dynamic routing | [📖 Readme](../2.Advance-samples/README.md) |
+| | [`5.workflow-handoff.py`](../2.Advance-samples/5.workflow-handoff.py) | Agent handoff pattern — transfers control between agents | [📖 Readme](../2.Advance-samples/README.md) |
 
 📖 See each folder's **Readme.md** for detailed documentation.
 
